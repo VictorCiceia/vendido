@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="Victor Ciceia" id="102">
+
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="users">
+			<column name="id" value="1" />
+			<column name="name" value="Admin" />
+			<column name="lastname" value="Admin" />
+			<column name="email" value="admin@gmail.com" />
+			<column name="password"
+				value="$2a$10$Uj2yunxx6abk4TAjNoF.pOLi9YBWyDR.pUD3jeFhmKtWGk6C.SA7u" />
+			<!-- 12345678 -->
+			<column name="created_at" value="2021-11-08 12:31:10.111" />
+			<column name="enabled" value="TRUE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="users">
+			<column name="id" value="2" />
+			<column name="name" value="Rolo" />
+			<column name="lastname" value="Rojas" />
+			<column name="email" value="rr@gmail.com" />
+			<column name="password"
+				value="$2a$10$Uj2yunxx6abk4TAjNoF.pOLi9YBWyDR.pUD3jeFhmKtWGk6C.SA7u" />
+			<!-- 12345678 -->
+			<column name="created_at" value="2021-11-06 15:22:22.100" />
+			<column name="enabled" value="TRUE" />
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>

@@ -6,32 +6,45 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="Victor Ciceia" id="2">
-		<createTable tableName="users">
+	<changeSet author="Victor Ciceia" id="11">
+		<createTable tableName="invoice_items">
 			<column autoIncrement="true" name="id" type="INT">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="name" type="VARCHAR(100)">
+			<column name="invoice_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkInvoiceItem" referencedTableName="invoices"
+					referencedColumnNames="id" />
+			</column>
+			<column name="product_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkInvoiceProduct" referencedTableName="products"
+					referencedColumnNames="id" />
+			</column>
+			<column name="product_quantity" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="lastname" type="VARCHAR(100)">
+			<column name="product_name" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="email" type="VARCHAR(150)">
+			<column name="product_tax_percentage" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="password" type="VARCHAR(255)">
+			<column name="product_cost_unit" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="created_at" type="TIMESTAMP" >
+			<column name="product_price_unit" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="enabled" type="BOOL" defaultValue="true">
+			<column name="total" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="tax_total" type="INT">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
 		<rollback>
-			<dropTable tableName="users" />
+			<dropTable tableName="invoice_items" />
 		</rollback>
 	</changeSet>
 
