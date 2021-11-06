@@ -29,6 +29,10 @@
 		file="/database/changelog/changes/creations/invoice-table.xml" />
 	<include
 		file="/database/changelog/changes/creations/invoice-item-table.xml" />
+	<include
+		file="/database/changelog/changes/creations/pay_ordes-table.xml" />
+	<include
+		file="/database/changelog/changes/creations/pay_order_items-table.xml" />
 		
 		<!-- Insercion de datos -->
 	<include

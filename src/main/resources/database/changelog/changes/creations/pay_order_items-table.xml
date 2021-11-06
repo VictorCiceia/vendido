@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="Victor Ciceia" id="13">
+		<createTable tableName="pay_order_items">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="pay_order_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkPayOrderItem" referencedTableName="pay_orders"
+					referencedColumnNames="id" />
+			</column>
+			<column name="product_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkPayOrderProduct" referencedTableName="products"
+					referencedColumnNames="id" />
+			</column>
+			<column name="product_quantity" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="product_name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="product_tax_percentage" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="product_price_unit" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="total" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="tax_total" type="INT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<rollback>
+			<dropTable tableName="pay_order_items" />
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>
