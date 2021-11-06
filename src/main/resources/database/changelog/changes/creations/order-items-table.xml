@@ -6,32 +6,45 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="Victor Ciceia" id="2">
-		<createTable tableName="users">
+	<changeSet author="Victor Ciceia" id="9">
+		<createTable tableName="order_items">
 			<column autoIncrement="true" name="id" type="INT">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="name" type="VARCHAR(100)">
+			<column name="order_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkOrderItem" referencedTableName="orders"
+					referencedColumnNames="id" />
+			</column>
+			<column name="product_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkOrderProduct" referencedTableName="products"
+					referencedColumnNames="id" />
+			</column>
+			<column name="product_quantity" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="lastname" type="VARCHAR(100)">
+			<column name="product_name" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="email" type="VARCHAR(150)">
+			<column name="product_tax" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="password" type="VARCHAR(255)">
+			<column name="product_cost" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="created_at" type="TIMESTAMP" >
+			<column name="product_price" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="enabled" type="BOOL" defaultValue="true">
+			<column name="total" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="tax_total" type="INT">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
 		<rollback>
-			<dropTable tableName="users" />
+			<dropTable tableName="order_items" />
 		</rollback>
 	</changeSet>
 

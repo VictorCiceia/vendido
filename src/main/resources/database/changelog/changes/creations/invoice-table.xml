@@ -6,32 +6,43 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="Victor Ciceia" id="2">
-		<createTable tableName="users">
+	<changeSet author="Victor Ciceia" id="10">
+		<createTable tableName="invoices">
 			<column autoIncrement="true" name="id" type="INT">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="name" type="VARCHAR(100)">
+			<column name="user_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fkInvoiceUser" referencedTableName="users"
+					referencedColumnNames="id" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="lastname" type="VARCHAR(100)">
+			<column name="document" type="VARCHAR(15)">
 				<constraints nullable="false" />
 			</column>
-			<column name="email" type="VARCHAR(150)">
+			<column name="address" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="password" type="VARCHAR(255)">
+			<column name="tax_total" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="total" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="pay_method" type="VARCHAR(15)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="TIMESTAMP" >
 				<constraints nullable="false" />
 			</column>
-			<column name="enabled" type="BOOL" defaultValue="true">
+			<column name="deleted" type="BOOL" defaultValue="false">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
 		<rollback>
-			<dropTable tableName="users" />
+			<dropTable tableName="invoices" />
 		</rollback>
 	</changeSet>
 

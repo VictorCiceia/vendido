@@ -6,24 +6,20 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="Victor Ciceia" id="3">
-		<createTable tableName="user_roles">
+	<changeSet author="Victor Ciceia" id="5">
+		<createTable tableName="categories">
 			<column autoIncrement="true" name="id" type="INT">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="user_id" type="INT">
-				<constraints nullable="false"
-					foreignKeyName="fkRoleUser" referencedTableName="users"
-					referencedColumnNames="id" />
+			<column name="category" type="VARCHAR(50)">
+				<constraints nullable="false" />
 			</column>
-			<column name="role_id" type="INT">
-				<constraints nullable="false"
-					foreignKeyName="fkUserRole" referencedTableName="roles"
-					referencedColumnNames="id" />
+			<column name="deleted" type="BOOL" defaultValue="false">
+				<constraints nullable="false" />
 			</column>
 		</createTable>
 		<rollback>
-			<dropTable tableName="user_roles" />
+			<dropTable tableName="categories" />
 		</rollback>
 	</changeSet>
 
