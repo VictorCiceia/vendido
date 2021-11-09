@@ -41,6 +41,8 @@
 		file="/database/changelog/changes/inserts/insert-users-1.xml" />
 	<include
 		file="/database/changelog/changes/inserts/insert-user_roles-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-user_details-1.xml" />
 	
 
 </databaseChangeLog>

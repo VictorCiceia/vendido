@@ -57,7 +57,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter imple
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
 				.and().headers().frameOptions().disable()//
 				.and().authorizeRequests().antMatchers("/auth/**").permitAll()//
-				.and().authorizeRequests().antMatchers("/api/**").authenticated();
+				.and().authorizeRequests().antMatchers("/api/**").permitAll();
+				//.and().authorizeRequests().antMatchers("/api/**").authenticated();
 	}
 
 	@Override
