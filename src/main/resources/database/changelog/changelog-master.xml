@@ -43,6 +43,10 @@
 		file="/database/changelog/changes/inserts/insert-user_roles-1.xml" />
 	<include
 		file="/database/changelog/changes/inserts/insert-user_details-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-category-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-product-1.xml" />
 	
 
 </databaseChangeLog>

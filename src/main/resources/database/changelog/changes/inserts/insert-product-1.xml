@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="Victor Ciceia" id="106">
+
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="1" />
+			<column name="category_id" value="1" />
+			<column name="name" value="CocaCola" />
+			<column name="description" value="1 Litro" />
+			<column name="cost" value="4000" />
+			<column name="price" value="6000" />
+			<column name="amount" value="12" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-10-05 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="2" />
+			<column name="category_id" value="1" />
+			<column name="name" value="CocaCola" />
+			<column name="description" value="2 Litros" />
+			<column name="cost" value="8000" />
+			<column name="price" value="10000" />
+			<column name="amount" value="8" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-05-03 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="3" />
+			<column name="category_id" value="1" />
+			<column name="name" value="Pepsi" />
+			<column name="description" value="1 Litro" />
+			<column name="cost" value="3000" />
+			<column name="price" value="5000" />
+			<column name="amount" value="9" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-01-06 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="4" />
+			<column name="category_id" value="1" />
+			<column name="name" value="Nico" />
+			<column name="description" value="2 Litros" />
+			<column name="cost" value="3500" />
+			<column name="price" value="5500" />
+			<column name="amount" value="14" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-10-06 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="5" />
+			<column name="category_id" value="1" />
+			<column name="name" value="Nico" />
+			<column name="description" value="2 Litros sabor guarana" />
+			<column name="cost" value="4000" />
+			<column name="price" value="6000" />
+			<column name="amount" value="11" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-07-06 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="6" />
+			<column name="category_id" value="2" />
+			<column name="name" value="Corona" />
+			<column name="description" value="Lata de 253ml" />
+			<column name="cost" value="5000" />
+			<column name="price" value="7000" />
+			<column name="amount" value="120" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-07-06 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="7" />
+			<column name="category_id" value="2" />
+			<column name="name" value="Pilsen" />
+			<column name="description" value="Lata de 350ml" />
+			<column name="cost" value="2500" />
+			<column name="price" value="3000" />
+			<column name="amount" value="211" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-07-01 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="products">
+			<column name="id" value="8" />
+			<column name="category_id" value="2" />
+			<column name="name" value="Brahma" />
+			<column name="description" value="Lata de 350ml" />
+			<column name="cost" value="3000" />
+			<column name="price" value="3500" />
+			<column name="amount" value="181" />
+			<column name="tax_percentage" value="10" />
+			<column name="created_at" value="2021-07-02 15:22:22.100" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>

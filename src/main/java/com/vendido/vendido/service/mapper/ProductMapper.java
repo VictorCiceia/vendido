@@ -28,7 +28,7 @@ public class ProductMapper implements BaseMapper<ProductEntity, ProductDTO>{
 	}
 
 	@Override
-	public ProductEntity toEntity(ProductDTO dto) {
+	public ProductEntity toEntity(final ProductDTO dto) {
 		final ProductEntity entity = new ProductEntity();
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
@@ -36,9 +36,18 @@ public class ProductMapper implements BaseMapper<ProductEntity, ProductDTO>{
 		entity.setPrice(dto.getPrice());
 		entity.setAmount(dto.getAmount());
 		entity.setTax_percentage(dto.getTaxPercentage());
-		entity.setCreated_at(dto.getCreatedAt());
 		entity.setCategory(this.categoryMapper.toEntity(dto.getCategory()));
 		return entity;
+	}
+	
+	public void toUpdateEntity(ProductEntity entity, final ProductDTO dto) {
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setCost(dto.getCost());
+		entity.setPrice(dto.getPrice());
+		entity.setAmount(dto.getAmount());
+		entity.setTax_percentage(dto.getTaxPercentage());
+		entity.setCategory(this.categoryMapper.toEntity(dto.getCategory()));
 	}
 
 }
