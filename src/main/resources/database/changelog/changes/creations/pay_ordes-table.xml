@@ -25,9 +25,6 @@
 			<column name="address" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="tax_total" type="INT">
-				<constraints nullable="false" />
-			</column>
 			<column name="total" type="INT">
 				<constraints nullable="false" />
 			</column>

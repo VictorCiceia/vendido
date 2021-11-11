@@ -35,9 +35,6 @@ public class PayOrderEntity {
 	@Column(name = "address", length = 255)
 	private String address;
 	
-	@Column(name = "tax_total")
-	private int taxTotal;
-	
 	@Column(name = "total")
 	private int total;
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="Victor Ciceia" id="111">
+
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="pay_orders">
+			<column name="id" value="1" />
+			<column name="user_id" value="1" />
+			<column name="name" value="Admin Admin" />
+			<column name="document" value="1234567" />
+			<column name="address" value="Av. Gral. Atigas" />
+			<column name="total" value="100000" />
+			<column name="status" value="Pagado" />
+			<column name="created_at" value="2021-12-08 12:31:10.111" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="pay_orders">
+			<column name="id" value="2" />
+			<column name="user_id" value="1" />
+			<column name="name" value="Admin Admin" />
+			<column name="document" value="1234567" />
+			<column name="address" value="Av. Gral. Atigas" />
+			<column name="total" value="22000" />
+			<column name="status" value="Pagado" />
+			<column name="created_at" value="2021-12-08 12:31:10.111" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="pay_orders">
+			<column name="id" value="3" />
+			<column name="user_id" value="2" />
+			<column name="name" value="Rolo Rojas" />
+			<column name="document" value="7654321" />
+			<column name="address" value="Av. Gral. Parana" />
+			<column name="total" value="0" />
+			<column name="status" value="Pagado" />
+			<column name="created_at" value="2021-12-08 12:31:10.111" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>

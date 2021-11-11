@@ -49,6 +49,13 @@
 		file="/database/changelog/changes/inserts/insert-orders-1.xml" />
 	<include
 		file="/database/changelog/changes/inserts/insert-order-items-1.xml" />
-	
+	<include
+		file="/database/changelog/changes/inserts/insert-invoices-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-invoice-items-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-pay-orders-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-pay-order-items-1.xml" />
 
 </databaseChangeLog>

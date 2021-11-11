@@ -27,18 +27,12 @@ public class PayOrderItemEntity {
 
 	@Column(name = "product_name")
 	private String productName;
-
-	@Column(name = "product_tax_percentage")
-	private int productTaxPercentage;
 	
 	@Column(name = "product_price_unit")
 	private int productPriceUnit;
 	
 	@Column(name = "total")
 	private int Total;
-	
-	@Column(name = "tax_total")
-	private int taxTotal;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "pay_order_id")
