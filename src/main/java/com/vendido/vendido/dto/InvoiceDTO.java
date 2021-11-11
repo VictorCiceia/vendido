@@ -6,22 +6,26 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class OrderDTO {
+public class InvoiceDTO {
 	
 	private Long id;
+	
+	private String name;
+	
+	private String document;
 
+	private String address;
+	
 	private int total;
 
 	private int tax_total;
 
-	private int productQuantity;
-	
-	private String status;
+	private String payMethodd;
 
 	private Date createdAt;
 	
 	private UserDTO user;
 	
-	private List<OrderItemDTO> items;
-	
+	private List<InvoiceItemDTO> items;
+
 }

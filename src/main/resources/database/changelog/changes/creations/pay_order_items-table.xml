@@ -27,16 +27,10 @@
 			<column name="product_name" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="product_tax_percentage" type="INT">
-				<constraints nullable="false" />
-			</column>
 			<column name="product_price_unit" type="INT">
 				<constraints nullable="false" />
 			</column>
 			<column name="total" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="tax_total" type="INT">
 				<constraints nullable="false" />
 			</column>
 		</createTable>

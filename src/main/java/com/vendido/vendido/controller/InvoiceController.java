@@ -15,45 +15,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vendido.vendido.dto.OrderDTO;
-import com.vendido.vendido.service.OrderService;
+import com.vendido.vendido.dto.InvoiceDTO;
+import com.vendido.vendido.service.InvoiceService;
 
 @RestController
 @RequestMapping("/api")
-public class OrderController implements BaseController<OrderDTO> {
+public class InvoiceController implements BaseController<InvoiceDTO> {
 	
 	@Autowired
-	private OrderService orderService;
+	private InvoiceService invoiceService;
 
 	@Override
-	@GetMapping("/orders")
-	public Page<OrderDTO> index(final Pageable pageable) {
-		return this.orderService.findAll(pageable);
+	@GetMapping("/invoices")
+	public Page<InvoiceDTO> index(final Pageable pageable) {
+		return this.invoiceService.findAll(pageable);
 	}
 
 	@Override
-	@GetMapping("/orders/{id}")
-	public OrderDTO find(@PathVariable final long id) throws Exception {
-		return this.orderService.findById(id);
+	@GetMapping("/invoices/{id}")
+	public InvoiceDTO find(@PathVariable final long id) throws Exception {
+		return this.invoiceService.findById(id);
 	}
 
 	@Override
-	@PostMapping("/orders")
-	public OrderDTO create(@Validated @RequestBody final OrderDTO dto) throws Exception {
-		return this.orderService.save(dto);
+	@PostMapping("/invoices")
+	public InvoiceDTO create(@Validated @RequestBody final InvoiceDTO dto) throws Exception {
+		return this.invoiceService.save(dto);
 	}
 
 	@Override
-	@PutMapping("/orders/{id}")
-	public OrderDTO update(@PathVariable final long id, @Validated @RequestBody final OrderDTO dto) throws Exception {
-		return this.orderService.update(id, dto);
+	@PutMapping("/invoices/{id}")
+	public InvoiceDTO update(@PathVariable final long id, @Validated @RequestBody final InvoiceDTO dto) throws Exception {
+		return this.invoiceService.update(id, dto);
 	}
 
 	@Override
-	@DeleteMapping("/orders/{id}")
+	@DeleteMapping("/invoices/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleted(@PathVariable final long id) throws Exception {
-		this.orderService.delete(id);		
+		this.invoiceService.delete(id);
 	}
 
 }

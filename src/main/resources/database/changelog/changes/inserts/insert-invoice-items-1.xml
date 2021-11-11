@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="Victor Ciceia" id="110">
+
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="invoice_items">
+			<column name="id" value="1" />
+			<column name="invoice_id" value="1" />
+			<column name="product_id" value="1" />
+			<column name="product_quantity" value="5" />
+			<column name="product_name" value="CocaCola" />
+			<column name="product_tax_percentage" value="10" />
+			<column name="product_cost_unit" value="4000" />
+			<column name="product_price_unit" value="6000" />
+			<column name="total" value="30000" />
+			<column name="tax_total" value="3000" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="invoice_items">
+			<column name="id" value="2" />
+			<column name="invoice_id" value="1" />
+			<column name="product_id" value="2" />
+			<column name="product_quantity" value="4" />
+			<column name="product_name" value="CocaCola" />
+			<column name="product_tax_percentage" value="10" />
+			<column name="product_cost_unit" value="8000" />
+			<column name="product_price_unit" value="10000" />
+			<column name="total" value="40000" />
+			<column name="tax_total" value="4000" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="invoice_items">
+			<column name="id" value="3" />
+			<column name="invoice_id" value="1" />
+			<column name="product_id" value="3" />
+			<column name="product_quantity" value="6" />
+			<column name="product_name" value="Pepsi" />
+			<column name="product_tax_percentage" value="10" />
+			<column name="product_cost_unit" value="3000" />
+			<column name="product_price_unit" value="5000" />
+			<column name="total" value="30000" />
+			<column name="tax_total" value="3000" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="invoice_items">
+			<column name="id" value="4" />
+			<column name="invoice_id" value="2" />
+			<column name="product_id" value="4" />
+			<column name="product_quantity" value="4" />
+			<column name="product_name" value="Nico" />
+			<column name="product_tax_percentage" value="10" />
+			<column name="product_cost_unit" value="3500" />
+			<column name="product_price_unit" value="5500" />
+			<column name="total" value="22000" />
+			<column name="tax_total" value="2200" />
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>
