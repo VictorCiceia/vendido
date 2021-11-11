@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -42,6 +41,9 @@ public class OrderEntity {
 	@Column(name = "created_at")
 	private Date created_at;
 	
+	@Column(name = "deleted")
+	private boolean deleted;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
@@ -49,7 +51,4 @@ public class OrderEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
 	private Set<OrderItemEntity> orderItems;
 	
-	@OneToOne(mappedBy = "order")
-	private OrderDetailEntiy detail;
-
 }

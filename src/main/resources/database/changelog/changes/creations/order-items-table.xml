@@ -24,24 +24,6 @@
 			<column name="product_quantity" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="product_name" type="VARCHAR(255)">
-				<constraints nullable="false" />
-			</column>
-			<column name="product_tax" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="product_cost" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="product_price" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="total" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="tax_total" type="INT">
-				<constraints nullable="false" />
-			</column>
 		</createTable>
 		<rollback>
 			<dropTable tableName="order_items" />

@@ -24,30 +24,12 @@ public class OrderItemEntity {
 
 	@Column(name = "product_quantity")
 	private int productQuantity;
-
-	@Column(name = "product_name", length = 255)
-	private String productName;
-
-	@Column(name = "product_tax_percentage")
-	private int productTaxPercentage;
 	
-	@Column(name = "product_cost_unit")
-	private int productCostUnit;
-	
-	@Column(name = "product_price_unit")
-	private int productPriceUnit;
-	
-	@Column(name = "total")
-	private int Total;
-	
-	@Column(name = "tax_total")
-	private int taxTotal;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
 	private OrderEntity order;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private ProductEntity product;
 
