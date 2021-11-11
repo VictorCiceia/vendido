@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="Victor Ciceia" id="107">
+
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="orders">
+			<column name="id" value="1" />
+			<column name="user_id" value="1" />
+			<column name="total" value="100000" />
+			<column name="tax_total" value="10000" />
+			<column name="product_quantity" value="3" />
+			<column name="status" value="Pendiente" />
+			<column name="created_at" value="2021-12-08 12:31:10.111" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="orders">
+			<column name="id" value="2" />
+			<column name="user_id" value="1" />
+			<column name="total" value="21000" />
+			<column name="tax_total" value="2100" />
+			<column name="product_quantity" value="1" />
+			<column name="status" value="Pendiente" />
+			<column name="created_at" value="2021-11-08 12:31:10.111" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+		
+		<insert catalogName="vendido" dbms="postgresql"
+			schemaName="public" tableName="orders">
+			<column name="id" value="3" />
+			<column name="user_id" value="2" />
+			<column name="total" value="0" />
+			<column name="tax_total" value="0" />
+			<column name="product_quantity" value="0" />
+			<column name="status" value="Pendiente" />
+			<column name="created_at" value="2021-10-08 12:31:10.111" />
+			<column name="deleted" value="FALSE" />
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>

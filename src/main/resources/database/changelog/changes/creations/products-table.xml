@@ -34,11 +34,8 @@
 			<column name="tax_percentage" type="INT">
 				<constraints nullable="false" />
 			</column>
-			<column name="created_at" type="TIMESTAMP" defaultValue="${now}">
+			<column name="created_at" type="TIMESTAMP" >
 				<constraints nullable="false" />
-			</column>
-			<column name="update_at" type="TIMESTAMP" >
-				<constraints nullable="true" />
 			</column>
 			<column name="deleted" type="BOOL" defaultValue="false">
 				<constraints nullable="false" />

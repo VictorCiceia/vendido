@@ -24,8 +24,6 @@
 	<include
 		file="/database/changelog/changes/creations/order-items-table.xml" />
 	<include
-		file="/database/changelog/changes/creations/order-details-table.xml" />
-	<include
 		file="/database/changelog/changes/creations/invoice-table.xml" />
 	<include
 		file="/database/changelog/changes/creations/invoice-item-table.xml" />
@@ -43,6 +41,14 @@
 		file="/database/changelog/changes/inserts/insert-user_roles-1.xml" />
 	<include
 		file="/database/changelog/changes/inserts/insert-user_details-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-category-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-product-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-orders-1.xml" />
+	<include
+		file="/database/changelog/changes/inserts/insert-order-items-1.xml" />
 	
 
 </databaseChangeLog>
