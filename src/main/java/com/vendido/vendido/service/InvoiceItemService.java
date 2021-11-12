@@ -25,7 +25,7 @@ import com.vendido.vendido.service.mapper.ProductMapper;
 public class InvoiceItemService implements BaseService<InvoiceItemDTO>{
 	
 	@Autowired
-	private InvoiceItemRepository invoiceRepository;
+	private InvoiceItemRepository invoiceItemRepository;
 	
 	@Autowired
 	private InvoiceItemMapper invoiceItemMapper;
@@ -52,7 +52,7 @@ public class InvoiceItemService implements BaseService<InvoiceItemDTO>{
 	
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<InvoiceItemDTO> findByInvoiceId(final long id) throws Exception {
-		List<InvoiceItemEntity> entities = this.invoiceRepository.findByInvoiceId(id);
+		List<InvoiceItemEntity> entities = this.invoiceItemRepository.findByInvoiceId(id);
 		if(!entities.isEmpty()) {
 			return entities.stream().map(this.invoiceItemMapper::toDTO).collect(Collectors.toList());
 		}else {
@@ -77,14 +77,14 @@ public class InvoiceItemService implements BaseService<InvoiceItemDTO>{
 		entity.setProduct(productEntity);
 		entity.setInvoice(invoiceEntity);
 
-		return this.invoiceItemMapper.toDTO(this.invoiceRepository.save(entity));
+		return this.invoiceItemMapper.toDTO(this.invoiceItemRepository.save(entity));
 	}
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public InvoiceItemDTO update(final long id, final InvoiceItemDTO dto) throws Exception {
 		//Se busca el item
-		InvoiceItemEntity entity = this.invoiceRepository.findById(id)//
+		InvoiceItemEntity entity = this.invoiceItemRepository.findById(id)//
 						.orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
 				
 		//Busca el producto
@@ -101,16 +101,16 @@ public class InvoiceItemService implements BaseService<InvoiceItemDTO>{
 		entity.setTotal(productEntity.getPrice() * dto.getProductQuantity());
 		
 		this.invoiceItemMapper.updateEntity(entity, dto.getProductQuantity());
-		return this.invoiceItemMapper.toDTO(this.invoiceRepository.save(entity));
+		return this.invoiceItemMapper.toDTO(this.invoiceItemRepository.save(entity));
 	}
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		//Se busca el item
-		InvoiceItemEntity entity = this.invoiceRepository.findById(id)//
+		InvoiceItemEntity entity = this.invoiceItemRepository.findById(id)//
 				.orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
-		this.invoiceRepository.delete(entity);		
+		this.invoiceItemRepository.delete(entity);		
 	}
 
 }
