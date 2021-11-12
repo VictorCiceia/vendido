@@ -47,5 +47,13 @@ public class InvoiceItemMapper implements BaseMapper<InvoiceItemEntity, InvoiceI
 		entity.setProductTaxPercentage(productDTO.getTaxPercentage());
 		return entity;
 	}
+	
+	public void updateEntity(final InvoiceItemEntity entity, final int quantity) {
+		entity.setProductQuantity(quantity);
+		entity.setProductName(entity.getProduct().getName());
+		entity.setProductCostUnit(entity.getProduct().getCost());
+		entity.setProductPriceUnit(entity.getProduct().getPrice());
+		entity.setProductTaxPercentage(entity.getProduct().getTax_percentage());
+	}
 
 }

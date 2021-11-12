@@ -13,10 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vendido.vendido.dto.PayOrderItemDTO;
 import com.vendido.vendido.dto.ProductDTO;
+import com.vendido.vendido.entity.PayOrderEntity;
 import com.vendido.vendido.entity.PayOrderItemEntity;
+import com.vendido.vendido.entity.ProductEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.PayOrderItemRepository;
 import com.vendido.vendido.service.mapper.PayOrderItemMapper;
+import com.vendido.vendido.service.mapper.ProductMapper;
 
 @Service
 public class PayOrderItemService implements BaseService<PayOrderItemDTO>{
@@ -29,6 +32,9 @@ public class PayOrderItemService implements BaseService<PayOrderItemDTO>{
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductMapper productMapper;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -59,15 +65,39 @@ public class PayOrderItemService implements BaseService<PayOrderItemDTO>{
 	public PayOrderItemDTO save(final PayOrderItemDTO dto) throws Exception {
 		//Busca el producto
 		ProductDTO productDTO = this.productService.findById(dto.getProductId());
+		ProductEntity productEntity = this.productMapper.toEntity(productDTO);
+		productEntity.setId(productDTO.getId());
 		
-		return null;
+		PayOrderEntity payOrderEntity = new PayOrderEntity();
+		payOrderEntity.setId(dto.getPayOrderId());
+		
+		PayOrderItemEntity entity = this.payOrderItemMapper.toEntity(productDTO, dto.getProductQuantity());
+		entity.setProduct(productEntity);
+		entity.setPayOrder(payOrderEntity);
+
+		return this.payOrderItemMapper.toDTO(this.payOrderItemRepository.save(entity));
 	}
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public PayOrderItemDTO update(final long id, final PayOrderItemDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		//Se busca el item
+		PayOrderItemEntity entity = this.payOrderItemRepository.findById(id)//
+			.orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+						
+		//Busca el producto
+		ProductDTO productDTO = this.productService.findById(dto.getProductId());
+		ProductEntity productEntity = this.productMapper.toEntity(productDTO);
+		productEntity.setId(productDTO.getId());
+		
+		PayOrderEntity payOrderEntity = new PayOrderEntity();
+		payOrderEntity.setId(dto.getPayOrderId());
+		
+		entity.setProduct(productEntity);
+		entity.setPayOrder(payOrderEntity);
+		this.payOrderItemMapper.toUpdateEntiry(entity, dto.getProductQuantity());
+		
+		return this.payOrderItemMapper.toDTO(this.payOrderItemRepository.save(entity));
 	}
 
 	@Override

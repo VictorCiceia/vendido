@@ -37,7 +37,15 @@ public class PayOrderItemMapper implements BaseMapper<PayOrderItemEntity, PayOrd
 		entity.setProductQuantity(quantity);
 		entity.setProductName(productDTO.getName());
 		entity.setProductPriceUnit(productDTO.getPrice());
+		entity.setTotal(productDTO.getPrice() * quantity);
 		return entity;
+	}
+	
+	public void toUpdateEntiry(final PayOrderItemEntity entity, final int quantity) {
+		entity.setProductQuantity(quantity);
+		entity.setProductName(entity.getProduct().getName());
+		entity.setProductPriceUnit(entity.getProduct().getPrice());
+		entity.setTotal(entity.getProduct().getPrice() * quantity);
 	}
 
 }
