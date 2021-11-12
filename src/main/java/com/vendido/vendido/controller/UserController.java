@@ -30,10 +30,15 @@ public class UserController implements BaseController<UserDTO>{
 	public Page<UserDTO> index(final Pageable pageable) {
 		return this.userService.findAll(pageable);
 	}
+	
+	@GetMapping("/users/search/{name}")
+	public Page<UserDTO> search(@PathVariable final String name, final Pageable pageable) throws Exception {
+		return this.userService.searchByName(name, pageable);
+	}
 
 	@Override
 	@GetMapping("/users/{id}")
-	public UserDTO find(final long id) throws Exception {
+	public UserDTO find(@PathVariable final long id) throws Exception {
 		return this.userService.findById(id);
 	}
 
