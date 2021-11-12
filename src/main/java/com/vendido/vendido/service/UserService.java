@@ -46,7 +46,7 @@ public class UserService implements BaseService<UserDTO> {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<UserDTO> findAll(Pageable pageable) {
+	public Page<UserDTO> findAll(final Pageable pageable) {
 		return this.userRepository.findAllByEnabled(true, pageable)//
 				.map(this.userMapper::toDetailDTO);
 	}
@@ -57,6 +57,12 @@ public class UserService implements BaseService<UserDTO> {
 		final UserEntity entity = this.userRepository.findByIdAndEnabled(id, true)//
 				.orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		return this.userMapper.toDetailDTO(entity);
+	}
+	
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public Page<UserDTO> searchByName(final String name, final Pageable pageable) throws Exception {
+		return this.userRepository.searchByNameAndEnabledStartsWith(name, true, pageable)//
+				.map(this.userMapper::toDetailDTO);
 	}
 
 	@Override
