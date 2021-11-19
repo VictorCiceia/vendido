@@ -5,7 +5,9 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class ProductDTO {
+public class ProductDTO implements BaseDTO{
+	
+	private static final long serialVersionUID = 112342134L;
 	
 	private Long id;
 

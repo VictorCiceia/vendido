@@ -1,7 +1,6 @@
 package com.vendido.vendido.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -16,23 +15,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendido.vendido.dto.UserDTO;
+import com.vendido.vendido.resource.UserResource;
 import com.vendido.vendido.service.UserService;
 
 @RestController
 @RequestMapping("/api")
-public class UserController implements BaseController<UserDTO>{
+public class UserController implements BaseController<UserDTO, UserResource>{
 	
 	@Autowired
 	private UserService userService;
 
 	@Override
 	@GetMapping("/users")
-	public Page<UserDTO> index(final Pageable pageable) {
+	public UserResource index(final Pageable pageable) {
 		return this.userService.findAll(pageable);
 	}
 	
 	@GetMapping("/users/search/{name}")
-	public Page<UserDTO> search(@PathVariable final String name, final Pageable pageable) throws Exception {
+	public UserResource search(@PathVariable final String name, final Pageable pageable) throws Exception {
 		return this.userService.searchByName(name, pageable);
 	}
 

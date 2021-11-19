@@ -1,7 +1,6 @@
 package com.vendido.vendido.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -16,18 +15,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendido.vendido.dto.PayOrderDTO;
+import com.vendido.vendido.resource.PayOrderResource;
 import com.vendido.vendido.service.PayOrderService;
 
 @RestController
 @RequestMapping("/api")
-public class PayOderController implements BaseController<PayOrderDTO>{
+public class PayOderController implements BaseController<PayOrderDTO, PayOrderResource>{
 	
 	@Autowired
 	private PayOrderService payOrderService;
 
 	@Override
 	@GetMapping("/pay-orders")
-	public Page<PayOrderDTO> index(final Pageable pageable) {
+	public PayOrderResource index(final Pageable pageable) {
 		return this.payOrderService.findAll(pageable);
 	}
 

@@ -14,10 +14,11 @@ import com.vendido.vendido.dto.ProductDTO;
 import com.vendido.vendido.entity.ProductEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.ProductRepository;
+import com.vendido.vendido.resource.ProductResource;
 import com.vendido.vendido.service.mapper.ProductMapper;
 
 @Service
-public class ProductService implements BaseService<ProductDTO> {
+public class ProductService implements BaseService<ProductDTO, ProductResource> {
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -30,9 +31,12 @@ public class ProductService implements BaseService<ProductDTO> {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<ProductDTO> findAll(final Pageable pageable) {
-		return this.productRepository.findAllByDeleted(false, pageable)//
+	public ProductResource findAll(final Pageable pageable) {
+		final Page<ProductDTO> page = this.productRepository.findAllByDeleted(false, pageable)//
 				.map(this.productMapper::toDTO);
+		final ProductResource res = new ProductResource();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override

@@ -7,14 +7,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel(description = "Objeto que representa a los roles que posee el sistema, se utiliza para listar")
-public class RoleDTO {
+public class RoleDTO implements BaseDTO{
+	
+	private static final long serialVersionUID = 1L;
 
-	@Positive(message = "El id debe ser mayor a 0")
-	@ApiModelProperty(notes = "Numero identificador", example = "1", required = true)
 	private Long id;
 
-	@ApiModelProperty(notes = "Titulo del Rol", example = "ROLE_ADMIN")
 	private String authority;
 
 }

@@ -18,11 +18,12 @@ import com.vendido.vendido.entity.InvoiceEntity;
 import com.vendido.vendido.entity.UserEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.InvoiceRepository;
+import com.vendido.vendido.resource.InvoiceResouce;
 import com.vendido.vendido.service.mapper.InvoiceMapper;
 import com.vendido.vendido.service.mapper.UserMapper;
 
 @Service
-public class InvoiceService implements BaseService<InvoiceDTO> {
+public class InvoiceService implements BaseService<InvoiceDTO, InvoiceResouce> {
 	
 	@Autowired
 	private InvoiceRepository invoiceRepository;
@@ -41,9 +42,12 @@ public class InvoiceService implements BaseService<InvoiceDTO> {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<InvoiceDTO> findAll(final Pageable pageable) {
-		return this.invoiceRepository.findAllByDeleted(false, pageable)//
+	public InvoiceResouce findAll(final Pageable pageable) {
+		final Page<InvoiceDTO> page =  this.invoiceRepository.findAllByDeleted(false, pageable)//
 				.map(this.invoiceMapper::toDTO);
+		final InvoiceResouce res = new InvoiceResouce();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override

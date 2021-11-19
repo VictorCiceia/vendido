@@ -11,10 +11,11 @@ import com.vendido.vendido.dto.CategoryDTO;
 import com.vendido.vendido.entity.CategoryEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.CategoryRepository;
+import com.vendido.vendido.resource.CategoryResource;
 import com.vendido.vendido.service.mapper.CategoryMapper;
 
 @Service
-public class CategoryService implements BaseService<CategoryDTO>{
+public class CategoryService implements BaseService<CategoryDTO, CategoryResource>{
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -24,9 +25,12 @@ public class CategoryService implements BaseService<CategoryDTO>{
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<CategoryDTO> findAll(final Pageable pageable) {
-		return this.categoryRepository.findAllByDeleted(false, pageable)//
+	public CategoryResource findAll(final Pageable pageable) {		
+		 Page<CategoryDTO> page = this.categoryRepository.findAllByDeleted(false, pageable)//
 				.map(this.categoryMapper::toDTO);
+		 final CategoryResource res = new CategoryResource();
+		 res.setList(page.getContent());
+		 return  res;
 	}
 
 	@Override

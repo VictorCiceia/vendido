@@ -18,11 +18,12 @@ import com.vendido.vendido.entity.OrderEntity;
 import com.vendido.vendido.entity.UserEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.OrderRepository;
+import com.vendido.vendido.resource.OrderResource;
 import com.vendido.vendido.service.mapper.OrderMapper;
 import com.vendido.vendido.service.mapper.UserMapper;
 
 @Service
-public class OrderService implements BaseService<OrderDTO> {
+public class OrderService implements BaseService<OrderDTO, OrderResource> {
 	
 	@Autowired
 	private OrderRepository orderRepository;
@@ -41,9 +42,12 @@ public class OrderService implements BaseService<OrderDTO> {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<OrderDTO> findAll(final Pageable pageable) {
-		return this.orderRepository.findAllByDeleted(false, pageable)//
+	public OrderResource findAll(final Pageable pageable) {
+		final Page<OrderDTO> page = this.orderRepository.findAllByDeleted(false, pageable)//
 				.map(this.orderMapper::toDTO);
+		final OrderResource res = new OrderResource();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override

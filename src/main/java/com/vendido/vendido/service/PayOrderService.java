@@ -18,11 +18,12 @@ import com.vendido.vendido.entity.PayOrderEntity;
 import com.vendido.vendido.entity.UserEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.PayOrderRepository;
+import com.vendido.vendido.resource.PayOrderResource;
 import com.vendido.vendido.service.mapper.PayOrderMapper;
 import com.vendido.vendido.service.mapper.UserMapper;
 
 @Service
-public class PayOrderService implements BaseService<PayOrderDTO>{
+public class PayOrderService implements BaseService<PayOrderDTO, PayOrderResource>{
 	
 	@Autowired
 	private PayOrderRepository payOrderRepository;
@@ -41,9 +42,12 @@ public class PayOrderService implements BaseService<PayOrderDTO>{
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<PayOrderDTO> findAll(final Pageable pageable) {
-		return this.payOrderRepository.findAllByDeleted(false, pageable)//
+	public PayOrderResource findAll(final Pageable pageable) {
+		final Page<PayOrderDTO> page = this.payOrderRepository.findAllByDeleted(false, pageable)//
 				.map(this.payOrderMapper::toDTO);
+		final PayOrderResource res = new PayOrderResource();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override
