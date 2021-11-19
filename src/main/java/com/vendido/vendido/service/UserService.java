@@ -20,11 +20,12 @@ import com.vendido.vendido.exception.FaildPasswordException;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.UserDetailRepository;
 import com.vendido.vendido.repository.UserRepository;
+import com.vendido.vendido.resource.UserResource;
 import com.vendido.vendido.service.mapper.UserDetailMapper;
 import com.vendido.vendido.service.mapper.UserMapper;
 
 @Service
-public class UserService implements BaseService<UserDTO> {
+public class UserService implements BaseService<UserDTO, UserResource> {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -46,9 +47,12 @@ public class UserService implements BaseService<UserDTO> {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<UserDTO> findAll(final Pageable pageable) {
-		return this.userRepository.findAllByEnabled(true, pageable)//
+	public UserResource findAll(final Pageable pageable) {
+		final Page<UserDTO> page =  this.userRepository.findAllByEnabled(true, pageable)//
 				.map(this.userMapper::toDetailDTO);
+		final UserResource res = new UserResource();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override
@@ -60,9 +64,12 @@ public class UserService implements BaseService<UserDTO> {
 	}
 	
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<UserDTO> searchByName(final String name, final Pageable pageable) throws Exception {
-		return this.userRepository.searchByNameAndEnabledStartsWith(name, true, pageable)//
+	public UserResource searchByName(final String name, final Pageable pageable) throws Exception {
+		final Page<UserDTO> page = this.userRepository.searchByNameAndEnabledStartsWith(name, true, pageable)//
 				.map(this.userMapper::toDetailDTO);
+		final UserResource res = new UserResource();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override

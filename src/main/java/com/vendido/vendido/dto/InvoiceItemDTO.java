@@ -3,7 +3,9 @@ package com.vendido.vendido.dto;
 import lombok.Data;
 
 @Data
-public class InvoiceItemDTO {
+public class InvoiceItemDTO implements BaseDTO{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 

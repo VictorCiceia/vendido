@@ -6,7 +6,9 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class OrderDTO {
+public class OrderDTO implements BaseDTO{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 

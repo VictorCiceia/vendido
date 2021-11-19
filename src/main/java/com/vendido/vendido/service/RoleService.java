@@ -11,10 +11,11 @@ import com.vendido.vendido.dto.RoleDTO;
 import com.vendido.vendido.entity.RoleEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.RoleRepository;
+import com.vendido.vendido.resource.RoleResource;
 import com.vendido.vendido.service.mapper.RoleMapper;
 
 @Service
-public class RoleService implements BaseService<RoleDTO> {
+public class RoleService implements BaseService<RoleDTO, RoleResource> {
 
 	@Autowired
 	private RoleRepository roleRepository;
@@ -24,9 +25,12 @@ public class RoleService implements BaseService<RoleDTO> {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<RoleDTO> findAll(final Pageable pageable) {
-		return this.roleRepository.findAll(pageable)//
+	public RoleResource findAll(final Pageable pageable) {
+		final Page<RoleDTO> page = this.roleRepository.findAll(pageable)//
 				.map(this.roleMapper::toDTO);
+		final RoleResource res = new RoleResource();
+		res.setList(page.getContent());
+		return res;
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,11 +17,12 @@ import com.vendido.vendido.entity.InvoiceItemEntity;
 import com.vendido.vendido.entity.ProductEntity;
 import com.vendido.vendido.exception.ResourceNotFoundException;
 import com.vendido.vendido.repository.InvoiceItemRepository;
+import com.vendido.vendido.resource.InvoiceItemResource;
 import com.vendido.vendido.service.mapper.InvoiceItemMapper;
 import com.vendido.vendido.service.mapper.ProductMapper;
 
 @Service
-public class InvoiceItemService implements BaseService<InvoiceItemDTO>{
+public class InvoiceItemService implements BaseService<InvoiceItemDTO, InvoiceItemResource>{
 	
 	@Autowired
 	private InvoiceItemRepository invoiceItemRepository;
@@ -38,7 +38,7 @@ public class InvoiceItemService implements BaseService<InvoiceItemDTO>{
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Page<InvoiceItemDTO> findAll(final Pageable pageable) {
+	public InvoiceItemResource findAll(final Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,11 +1,10 @@
 package com.vendido.vendido.service;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface BaseService<DTO> {
+public interface BaseService<DTO, Res> {
 
-	public Page<DTO> findAll(final Pageable pageable);
+	public Res findAll(final Pageable pageable);
 
 	public DTO findById(final long id) throws Exception;
 
