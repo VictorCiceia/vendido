@@ -1,6 +1,10 @@
 package com.vendido.vendido.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,9 @@ public class CategoryService implements BaseService<CategoryDTO, CategoryResourc
 	
 	@Autowired
 	private CategoryMapper categoryMapper;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -30,10 +37,15 @@ public class CategoryService implements BaseService<CategoryDTO, CategoryResourc
 				.map(this.categoryMapper::toDTO);
 		 final CategoryResource res = new CategoryResource();
 		 res.setList(page.getContent());
+		 
+		 for(CategoryDTO c : res.getList()) {
+			 cacheManager.getCache("categories").put(c.getId(), c);
+		 }
 		 return  res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "categories", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public CategoryDTO findById(final long id) throws Exception {
 		return this.categoryRepository.findByIdAndDeleted(id, false)//
@@ -50,6 +62,7 @@ public class CategoryService implements BaseService<CategoryDTO, CategoryResourc
 	}
 
 	@Override
+	@CachePut(cacheNames = "categories", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public CategoryDTO update(final long id, final CategoryDTO dto) throws Exception {
 		CategoryEntity entity = this.categoryRepository.findByIdAndDeleted(id, false)//
@@ -59,6 +72,7 @@ public class CategoryService implements BaseService<CategoryDTO, CategoryResourc
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "categories", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		CategoryEntity entity = this.categoryRepository.findByIdAndDeleted(id, false)//

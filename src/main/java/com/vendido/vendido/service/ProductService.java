@@ -3,6 +3,10 @@ package com.vendido.vendido.service;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,9 @@ public class ProductService implements BaseService<ProductDTO, ProductResource> 
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -36,10 +43,14 @@ public class ProductService implements BaseService<ProductDTO, ProductResource> 
 				.map(this.productMapper::toDTO);
 		final ProductResource res = new ProductResource();
 		res.setList(page.getContent());
+		for(ProductDTO p : res.getList()) {
+			 cacheManager.getCache("products").put(p.getId(), p);
+		}
 		return res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "products", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public ProductDTO findById(final long id) throws Exception {
 		return this.productRepository.findByIdAndDeleted(id, false)//
@@ -60,6 +71,7 @@ public class ProductService implements BaseService<ProductDTO, ProductResource> 
 	}
 
 	@Override
+	@CachePut(cacheNames = "products", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public ProductDTO update(final long id, final ProductDTO dto) throws Exception {
 		ProductEntity entity = this.productRepository.findByIdAndDeleted(id, false)//
@@ -73,6 +85,7 @@ public class ProductService implements BaseService<ProductDTO, ProductResource> 
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "products", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		ProductEntity entity = this.productRepository.findByIdAndDeleted(id, false)//

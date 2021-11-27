@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,9 @@ public class PayOrderService implements BaseService<PayOrderDTO, PayOrderResourc
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -47,10 +54,14 @@ public class PayOrderService implements BaseService<PayOrderDTO, PayOrderResourc
 				.map(this.payOrderMapper::toDTO);
 		final PayOrderResource res = new PayOrderResource();
 		res.setList(page.getContent());
+		for(PayOrderDTO p : res.getList()) {
+			cacheManager.getCache("payorders").put(p.getId(), p);
+		}
 		return res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "payorders", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public PayOrderDTO findById(final long id) throws Exception {
 		final PayOrderDTO dto = this.payOrderRepository.findByIdAndDeleted(id, false)//
@@ -93,6 +104,7 @@ public class PayOrderService implements BaseService<PayOrderDTO, PayOrderResourc
 	}
 
 	@Override
+	@CachePut(cacheNames = "payorders", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public PayOrderDTO update(final long id, PayOrderDTO dto) throws Exception {
 		//Buscando orden
@@ -122,6 +134,7 @@ public class PayOrderService implements BaseService<PayOrderDTO, PayOrderResourc
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "payorders", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		PayOrderEntity entity = this.payOrderRepository.findByIdAndDeleted(id, false)//

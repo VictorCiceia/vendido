@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -82,6 +84,7 @@ public class OrderItemService implements BaseService<OrderItemDTO, OrderItemReso
 	}
 
 	@Override
+	@CachePut(cacheNames = "ordeitems", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public OrderItemDTO update(final long id, final OrderItemDTO dto) throws Exception {
 		
@@ -103,6 +106,7 @@ public class OrderItemService implements BaseService<OrderItemDTO, OrderItemReso
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "ordeitems", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		//Se busca el item

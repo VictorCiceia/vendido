@@ -1,6 +1,10 @@
 package com.vendido.vendido.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,9 @@ public class RoleService implements BaseService<RoleDTO, RoleResource> {
 
 	@Autowired
 	private RoleMapper roleMapper;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -30,10 +37,14 @@ public class RoleService implements BaseService<RoleDTO, RoleResource> {
 				.map(this.roleMapper::toDTO);
 		final RoleResource res = new RoleResource();
 		res.setList(page.getContent());
+		for(RoleDTO r : res.getList()) {
+			 cacheManager.getCache("roles").put(r.getId(), r);
+		}
 		return res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "roles", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public RoleDTO findById(final long id) throws Exception {
 		return this.roleRepository.findById(id)//
@@ -49,6 +60,7 @@ public class RoleService implements BaseService<RoleDTO, RoleResource> {
 	}
 
 	@Override
+	@CachePut(cacheNames = "roles", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public RoleDTO update(final long id, final RoleDTO dto) throws Exception {
 		RoleEntity entity = this.roleRepository.findById(id)//
@@ -58,6 +70,7 @@ public class RoleService implements BaseService<RoleDTO, RoleResource> {
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "roles", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		if (!this.roleRepository.existsById(id)) {
