@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,9 @@ public class InvoiceService implements BaseService<InvoiceDTO, InvoiceResouce> {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -47,10 +54,14 @@ public class InvoiceService implements BaseService<InvoiceDTO, InvoiceResouce> {
 				.map(this.invoiceMapper::toDTO);
 		final InvoiceResouce res = new InvoiceResouce();
 		res.setList(page.getContent());
+		for(InvoiceDTO i : res.getList()) {
+			cacheManager.getCache("invoices").put(i.getId(), i);
+		}
 		return res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "invoices", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public InvoiceDTO findById(final long id) throws Exception {
 		final InvoiceDTO dto = this.invoiceRepository.findByIdAndDeleted(id, false)//
@@ -92,6 +103,7 @@ public class InvoiceService implements BaseService<InvoiceDTO, InvoiceResouce> {
 	}
 
 	@Override
+	@CachePut(cacheNames = "invoices", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public InvoiceDTO update(final long id, final InvoiceDTO dto) throws Exception {
 		//Buscando orden
@@ -121,6 +133,7 @@ public class InvoiceService implements BaseService<InvoiceDTO, InvoiceResouce> {
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "invoices", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		final InvoiceEntity entity = this.invoiceRepository.findByIdAndDeleted(id, false)//

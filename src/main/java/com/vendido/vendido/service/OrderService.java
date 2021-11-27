@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,9 @@ public class OrderService implements BaseService<OrderDTO, OrderResource> {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -47,10 +54,14 @@ public class OrderService implements BaseService<OrderDTO, OrderResource> {
 				.map(this.orderMapper::toDTO);
 		final OrderResource res = new OrderResource();
 		res.setList(page.getContent());
+		for(OrderDTO o : res.getList()) {
+			cacheManager.getCache("ordes").put(o.getId(), o);
+		}
 		return res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "ordes", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public OrderDTO findById(final long id) throws Exception {
 		
@@ -94,6 +105,7 @@ public class OrderService implements BaseService<OrderDTO, OrderResource> {
 	}
 
 	@Override
+	@CachePut(cacheNames = "ordes", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public OrderDTO update(long id, OrderDTO dto) throws Exception {
 		
@@ -125,6 +137,7 @@ public class OrderService implements BaseService<OrderDTO, OrderResource> {
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "ordes", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(long id) throws Exception {
 		OrderEntity entity = this.orderRepository.findByIdAndDeleted(id, false)//

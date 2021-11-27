@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -81,6 +83,7 @@ public class InvoiceItemService implements BaseService<InvoiceItemDTO, InvoiceIt
 	}
 
 	@Override
+	@CachePut(cacheNames = "categories", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public InvoiceItemDTO update(final long id, final InvoiceItemDTO dto) throws Exception {
 		//Se busca el item
@@ -105,6 +108,7 @@ public class InvoiceItemService implements BaseService<InvoiceItemDTO, InvoiceIt
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "categories", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		//Se busca el item

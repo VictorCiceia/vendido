@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,6 +48,9 @@ public class UserService implements BaseService<UserDTO, UserResource> {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -52,10 +59,14 @@ public class UserService implements BaseService<UserDTO, UserResource> {
 				.map(this.userMapper::toDetailDTO);
 		final UserResource res = new UserResource();
 		res.setList(page.getContent());
+		for(UserDTO u: res.getList()) {
+			cacheManager.getCache("users").put(u.getId(), u);
+		}
 		return res;
 	}
 
 	@Override
+	@Cacheable(cacheNames = "users", key = "#id")
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public UserDTO findById(final long id) throws Exception {
 		final UserEntity entity = this.userRepository.findByIdAndEnabled(id, true)//
@@ -69,6 +80,9 @@ public class UserService implements BaseService<UserDTO, UserResource> {
 				.map(this.userMapper::toDetailDTO);
 		final UserResource res = new UserResource();
 		res.setList(page.getContent());
+		for(UserDTO u: res.getList()) {
+			cacheManager.getCache("users").put(u.getId(), u);
+		}
 		return res;
 	}
 
@@ -96,6 +110,7 @@ public class UserService implements BaseService<UserDTO, UserResource> {
 	}
 
 	@Override
+	@CachePut(cacheNames = "users", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public UserDTO update(final long id, final UserDTO dto) throws Exception {
 
@@ -120,6 +135,7 @@ public class UserService implements BaseService<UserDTO, UserResource> {
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "users", key = "#id")
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void delete(final long id) throws Exception {
 		UserEntity userEntity = this.userRepository.findByIdAndEnabled(id, true)//
