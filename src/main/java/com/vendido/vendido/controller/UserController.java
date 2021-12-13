@@ -35,11 +35,16 @@ public class UserController implements BaseController<UserDTO, UserResource>{
 	public UserResource search(@PathVariable final String name, final Pageable pageable) throws Exception {
 		return this.userService.searchByName(name, pageable);
 	}
-
+	
 	@Override
 	@GetMapping("/users/{id}")
 	public UserDTO find(@PathVariable final long id) throws Exception {
 		return this.userService.findById(id);
+	}
+	
+	@GetMapping("/users/email/{email}")
+	public UserDTO find(@PathVariable final String email) throws Exception {
+		return this.userService.findByEmail(email);
 	}
 
 	@Override

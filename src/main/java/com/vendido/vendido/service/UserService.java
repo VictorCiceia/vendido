@@ -75,6 +75,15 @@ public class UserService implements BaseService<UserDTO, UserResource> {
 	}
 	
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public UserDTO findByEmail(final String email) throws Exception {
+		final UserEntity entity = this.userRepository.findByEmailAndEnabled(email, true)//
+				.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));		
+		final UserDTO dto = this.userMapper.toDetailDTO(entity);
+		cacheManager.getCache("users").put(dto.getId(), dto);
+		return dto;
+	}
+	
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public UserResource searchByName(final String name, final Pageable pageable) throws Exception {
 		final Page<UserDTO> page = this.userRepository.searchByNameAndEnabledStartsWith(name, true, pageable)//
 				.map(this.userMapper::toDetailDTO);
