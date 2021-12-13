@@ -23,6 +23,7 @@ public class UserMapper implements BaseMapper<UserEntity, UserDTO> {
 		dto.setLastname(entity.getLastname());
 		dto.setEmail(entity.getEmail());		
 		dto.setCreatedAt(entity.getCreatedAt());
+		dto.setOldPassword(entity.getPassword());
 		return dto;
 	}
 
